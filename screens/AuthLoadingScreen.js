@@ -1,12 +1,45 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React, { useEffect } from "react";
+import {
+  View,
+  ActivityIndicator,
+  StatusBar,
+  StyleSheet,
+  AsyncStorage,
+  Text
+} from "react-native";
 
-const AuthLoadingScreen = () => {
-    return (
-        <View>
-            <Text>loading</Text>
-        </View>
-    )
-}
+const AuthLoadingScreen = ({ navigation }) => {
+  useEffect(() => {
+    _bootstrapAsync();
+  }, []);
 
-export default AuthLoadingScreen
+  const _bootstrapAsync = async () => {
+    setTimeout(async () => {
+      const userToken = await AsyncStorage.getItem("userToken");
+      navigation.navigate(userToken ? "Main" : "Auth");
+    }, 1000);
+  };
+  return (
+    <View style={style.container}>
+      <StatusBar
+        barStyle="dark-content"
+        backgroundColor="blue"
+        translucent={true}
+        hidden={true}
+      />
+      <ActivityIndicator size="large" />
+    </View>
+  );
+};
+
+const style = StyleSheet.create({
+  container: {
+    // marginTop: StatusBar.currentHeight,
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    backgroundColor: "lightgrey"
+  }
+});
+
+export default AuthLoadingScreen;
