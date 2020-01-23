@@ -4,8 +4,8 @@ import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
 
 import TabBarIcon from "../components/TabBarIcon";
-import HomeScreen from "../screens/HomeScreen";
-import LinksScreen from "../screens/LinksScreen";
+import WriteScreen from "../screens/WriteScreen";
+import ListScreen from "../screens/ListScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 
 const config = Platform.select({
@@ -15,20 +15,20 @@ const config = Platform.select({
 
 const HomeStack = createStackNavigator(
   {
-    Home: HomeScreen
+    Home: WriteScreen
   },
   config
 );
 
 HomeStack.navigationOptions = {
-  tabBarLabel: "Home",
+  tabBarLabel: "Write",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
       name={
         Platform.OS === "ios"
-          ? `ios-information-circle${focused ? "" : "-outline"}`
-          : "md-information-circle"
+          ? "ios-add-circle-outline"
+          : "md-add-circle-outline"
       }
     />
   )
@@ -38,17 +38,17 @@ HomeStack.path = "";
 
 const LinksStack = createStackNavigator(
   {
-    Links: LinksScreen
+    Links: ListScreen
   },
   config
 );
 
 LinksStack.navigationOptions = {
-  tabBarLabel: "Links",
+  tabBarLabel: "List",
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
-      name={Platform.OS === "ios" ? "ios-link" : "md-link"}
+      name={Platform.OS === "ios" ? "ios-list" : "md-list"}
     />
   )
 };
